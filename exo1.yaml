@@ -1,0 +1,28 @@
+openapi: 3.0.0
+info:
+  title: STD23089 - TD1
+  version: 1.0.0
+  description: "TD1 : Lorsqu'on effectue la requête GET URL/customers, on obtient avec une réponse 200, une liste de Customers de type objet, dont les attributs sont name de type string et yearsOld de type integer."
+servers:
+  - url: https://localhost.std23089.com
+paths:
+  /customers:
+    get:
+      responses:
+        200:
+          description: "reponse attendue"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Customer"
+components:
+  schemas:
+    Customer:
+      type: object
+      properties:
+        name:
+          type: string
+        age:
+          type: integer
