@@ -1,0 +1,111 @@
+openapi: 3.0.0
+info:
+  title: STD23089 - TD1
+  version: 1.0.0
+  description: "TD1 : Lorsqu'on effectue la requête GET URL/customers, on obtient avec une réponse 200, une liste de Meals de type objet, dont les attributs sont name de type string et yearsOld de type integer."
+servers:
+  - url: https://localhost.std23089.com
+paths:
+  /meal:
+    get:
+      tag:
+        - Food
+      responses:
+        200:
+          description: "reponse attendue"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Meal"
+    post:
+      tag:
+        - Food
+      responses:
+        201:
+          description: "reponse attendue"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Meal"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/CreateMeal"
+    put:
+      tag:
+        - Food
+      responses:
+        201:
+          description: "reponse attendue"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Meal"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/Meal"
+        required: true
+    delete:
+      tag:
+        - Food
+      responses:
+        200:
+          description: "reponse attendue"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Meal"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/MealIdentifier"
+        required: true
+components:
+  schemas:
+    CreateMeal:
+      type: object
+      properties:
+        name:
+          type: string
+        price:
+          type: string
+          format: double
+    Meal:
+      allOf:
+        - $ref: "#/components/schemas/CreateMeal"
+        - $ref: "#/components/schemas/MealIdentifier"
+    MealIdentifier:
+      type: object
+      properties:
+        id:
+          type: string
+    Order:
+      type: object
+      properties:
+        reference:
+          type: string
+        meals:
+          type: array
+          items:
+            type: object
+            items:
+              $ref: "#/components/schemas/Meal"
