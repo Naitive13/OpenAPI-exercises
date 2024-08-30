@@ -1,0 +1,69 @@
+openapi: 3.0.3
+info:
+  title: STD23089 - TD5
+  version: "1.0.3"
+  description: "Customer CRUD improved"
+servers:
+  - url: https://localhost.std23089.com
+paths:
+  /customers:
+    put:
+      summary: Update a Customer
+      description: replace customer
+      requestBody:
+        description: update customer's information.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Customer"
+        required: true
+      responses:
+        200:
+          description: updated customer object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+    patch:
+      summary: update a Customer
+      description: Modify existing customer.
+      requestBody:
+        description: Customer updated information.
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PartialCustomer"
+        required: true
+      responses:
+        200:
+          description: updated customer object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+components:
+  schemas:
+    Customer:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        age:
+          type: integer
+      required:
+        - id
+        - name
+        - age
+    PartialCustomer:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        age:
+          type: integer
+      required:
+        - id

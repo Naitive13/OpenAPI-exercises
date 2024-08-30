@@ -1,0 +1,122 @@
+openapi: 3.0.3
+info:
+  title: STD23089 - TD4
+  version: "1.0.0"
+  description: "Relier Meal avec Order"
+servers:
+  - url: https://localhost.std23089.com
+paths:
+  /customers/{customerId}/orders:
+    get:
+      parameters:
+        - in: path
+          name: customerId
+          schema:
+            type: string
+          required: true
+        - in: query
+          name: page
+          schema:
+            type: integer
+          required: true
+        - in: query
+          name: pageSize
+          schema:
+            type: integer
+          required: true
+      responses:
+        200:
+          description: List of orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/order"
+    post:
+      parameters:
+        - in: path
+          name: customerId
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateOrder"
+        required: true
+      responses:
+        200:
+          description: Created order
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/order"
+    put:
+      parameters:
+        - in: path
+          name: customerId
+          schema:
+            type: string
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/order"
+        required: true
+      responses:
+        200:
+          description: update order
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/order"
+components:
+  schemas:
+    order:
+      type: object
+      properties:
+        id:
+          type: string
+        reference:
+          type: string
+        meals:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderMeal"
+        orderDatetime:
+          type: string
+          format: date-time
+    CreateOrder:
+      type: object
+      properties:
+        meals:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderMeal"
+    OrderMeal:
+      type: object
+      properties:
+        meal:
+          $ref: "#/components/schemas/MealIdentifier"
+        quantity:
+          type: integer
+    Meal:
+      allOf:
+        - $ref: "#/components/schemas/MealIdentifier"
+        - $ref: "#/components/schemas/CreateMeal"
+    MealIdentifier:
+      type: object
+      properties:
+        id:
+          type: string
+    CreateMeal:
+      type: object
+      properties:
+        name:
+          type: string
+        price:
+          type: number
+          format: float

@@ -1,12 +1,12 @@
 openapi: 3.0.3
 info:
-  title: STD23089 - TD3
-  description: "Endpoint Meal"
-  version: '1.0.0'
+  title: STD23089 - TD2
+  version: "1.0.3"
+  description: "CRUD pour customer"
 servers:
   - url: https://localhost.std23089.com
 paths:
-  /meals:
+  /customers:
     get:
       parameters:
         - in: query
@@ -21,13 +21,13 @@ paths:
           required: true
       responses:
         200:
-          description: List of meals
+          description: List of customers
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Meal'
+                  $ref: "#/components/schemas/Customer"
     post:
       requestBody:
         content:
@@ -35,17 +35,17 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/CreateMeal'
+                $ref: "#/components/schemas/CreateCustomer"
         required: true
       responses:
         200:
-          description: List of created meals
+          description: List of created customers
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Meal'
+                  $ref: "#/components/schemas/Customer"
     put:
       requestBody:
         content:
@@ -53,17 +53,17 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/Meal'
+                $ref: "#/components/schemas/Customer"
         required: true
       responses:
         200:
-          description: List of updated meals
+          description: List of updated customers
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Meal'
+                  $ref: "#/components/schemas/Customer"
     delete:
       requestBody:
         content:
@@ -71,33 +71,32 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/MealIdentifier'
+                $ref: "#/components/schemas/CustomerIdentifier"
         required: true
       responses:
         200:
-          description: List of deleted meals
+          description: List of deleted customers
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Meal'
+                  $ref: "#/components/schemas/Customer"
 components:
   schemas:
-    Meal:
+    Customer:
       allOf:
-        - $ref: '#/components/schemas/MealIdentifier'
-        - $ref: '#/components/schemas/CreateMeal'
-    MealIdentifier:
+        - $ref: "#/components/schemas/CustomerIdentifier"
+        - $ref: "#/components/schemas/CreateCustomer"
+    CustomerIdentifier:
       type: object
       properties:
         id:
           type: string
-    CreateMeal:
+    CreateCustomer:
       type: object
       properties:
         name:
           type: string
-        price:
-          type: number
-          format: float
+        age:
+          type: integer
